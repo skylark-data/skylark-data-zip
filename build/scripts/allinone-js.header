@@ -62,10 +62,12 @@
   factory(define,require);
 
   if (!isAmd) {
-  	if (isCmd) {
-  		exports = require("skylark-utils-zip/zip");
+    var skylarkjs = require("skylark-langx/skylark");
+
+    if (isCmd) {
+      exports = skylarkjs;
     } else {
-    	globals.skylarkjs = require("skylark-utils-zip/main");
+      globals.skylarkjs  = skylarkjs;
     }
   }
 
