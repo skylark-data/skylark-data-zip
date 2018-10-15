@@ -7,9 +7,9 @@
  */
 (function(factory,globals) {
   var define = globals.define,
-  	  require = globals.require,
-  	  isAmd = (typeof define === 'function' && define.amd),
-  	  isCmd = (!isAmd && typeof exports !== 'undefined');
+      require = globals.require,
+      isAmd = (typeof define === 'function' && define.amd),
+      isCmd = (!isAmd && typeof exports !== 'undefined');
 
   if (!isAmd && !define) {
     var map = {};
@@ -41,7 +41,7 @@
             };
             require(id);
         } else {
-            resolved[id] = factory;
+            map[id] = factory;
         }
     };
     require = globals.require = function(id) {
@@ -69,10 +69,12 @@
   factory(define,require);
 
   if (!isAmd) {
-  	if (isCmd) {
-  		exports = require("skylark-utils-zip/zip");
+    var skylarkjs = require("skylark-langx/skylark");
+
+    if (isCmd) {
+      exports = skylarkjs;
     } else {
-    	globals.skylarkjs = require("skylark-utils-zip/main");
+      globals.skylarkjs  = skylarkjs;
     }
   }
 
