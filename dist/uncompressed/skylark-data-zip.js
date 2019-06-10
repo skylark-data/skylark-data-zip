@@ -1,5 +1,5 @@
 /**
- * skylark-utils-zip - A skylark wrapper for jszip.
+ * skylark-data-zip - A skylark wrapper for jszip.
  * @author Hudaokeji Co.,Ltd
  * @version v0.9.0-beta
  * @link www.skylarkjs.org
@@ -86,7 +86,7 @@
 
 })(function(define,require) {
 
-define('skylark-utils-zip/_stuk/jszip',[], function() {
+define('skylark-data-zip/_stuk/jszip',[], function() {
 /*!
 
 JSZip v3.1.3 - A Javascript class for generating and reading zip files
@@ -12303,7 +12303,7 @@ https://github.com/nodeca/pako/blob/master/LICENSE
 
     return expose(10);
 });
-define('skylark-utils-zip/zip',[
+define('skylark-data-zip/zip',[
     "skylark-langx/skylark",
     "skylark-langx/langx",
     "./_stuk/jszip"
@@ -12325,15 +12325,15 @@ define('skylark-utils-zip/zip',[
     return skylark.zip = zip;
 
 });
-define('skylark-utils-zip/main',[
+define('skylark-data-zip/main',[
     "skylark-langx/skylark",
     "./zip"
 ], function(skylark) {
     return skylark;
 });
 
-define('skylark-utils-zip', ['skylark-utils-zip/main'], function (main) { return main; });
+define('skylark-data-zip', ['skylark-data-zip/main'], function (main) { return main; });
 
 
 },this);
-//# sourceMappingURL=sourcemaps/skylark-utils-zip.js.map
+//# sourceMappingURL=sourcemaps/skylark-data-zip.js.map
