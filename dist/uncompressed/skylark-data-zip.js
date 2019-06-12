@@ -12322,7 +12322,7 @@ define('skylark-data-zip/zip',[
         "ZipFile": JSZip
     });
 
-    return skylark.zip = zip;
+    return skylark.attach("data.zip", zip);
 
 });
 define('skylark-data-zip/main',[
