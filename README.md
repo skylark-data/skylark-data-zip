@@ -1,4 +1,4 @@
-# skylark-data-zip
+# skylark-jszip
 The skylark zip class library
 
 ## Dependences
@@ -13,10 +13,10 @@ builds are in the directory dist.
 
 |                      | build                                   | Description              |
 | -------------------- | --------------------------------------- | ------------------------ |
-| full                 | skylark-data-zip-all.js              | included dependences     |
-| only                 | skylark-data-zip.js                  | not included dependences |
-| full （development） | uncompressed/skylark-data-zip-all.js | included dependences     |
-| only （development） | uncompressed/skylark-data-zip.js     | not included dependences |
+| full                 | skylark-jszip-all.js              | included dependences     |
+| only                 | skylark-jszip.js                  | not included dependences |
+| full （development） | uncompressed/skylark-jszip-all.js | included dependences     |
+| only （development） | uncompressed/skylark-jszip.js     | not included dependences |
 
 Please use the "full" version when using this library alone, and use the "only" version when using other skylark libraries.
 
@@ -24,9 +24,9 @@ Please use the "full" version when using this library alone, and use the "only" 
 
 You can get the latest version in many different ways:
 
-- Downloading [a ZIP file from master](https://github.com/skylark-data/skylark-data-zip/archive/master.zip)
-- Cloning using Git: `git clone https://github.com/skylark-data/skylark-data-zip.git`
-- Installing via NPM: `npm install https://github.com/skylark-data/skylark-data-zip.git#master --save`
+- Downloading [a ZIP file from master](https://github.com/skylark-integration/skylark-jszip/archive/master.zip)
+- Cloning using Git: `git clone https://github.com/skylark-integration/skylark-jszip.git`
+- Installing via NPM: `npm install https://github.com/skylark-integration/skylark-jszip.git#master --save`
 
 ## Building 
 

@@ -1,7 +1,7 @@
 /**
- * skylark-data-zip - A skylark wrapper for jszip.
+ * skylark-jszip - A skylark wrapper for jszip.
  * @author Hudaokeji Co.,Ltd
- * @version v0.9.0-beta
+ * @version v0.9.0
  * @link www.skylarkjs.org
  * @license MIT
  */
@@ -75,7 +75,7 @@
   factory(define,require);
 
   if (!isAmd) {
-    var skylarkjs = require("skylark-langx/skylark");
+    var skylarkjs = require("skylark-langx-ns");
 
     if (isCmd) {
       module.exports = skylarkjs;
@@ -3731,7 +3731,7 @@ define('skylark-langx/langx',[
 
     return skylark.langx = langx;
 });
-define('skylark-data-zip/_stuk/jszip',[], function() {
+define('skylark-jszip/_stuk/jszip',[], function() {
 /*!
 
 JSZip v3.1.3 - A Javascript class for generating and reading zip files
@@ -15948,7 +15948,7 @@ https://github.com/nodeca/pako/blob/master/LICENSE
 
     return expose(10);
 });
-define('skylark-data-zip/zip',[
+define('skylark-jszip/zip',[
     "skylark-langx/skylark",
     "skylark-langx/langx",
     "./_stuk/jszip"
@@ -15970,14 +15970,14 @@ define('skylark-data-zip/zip',[
     return skylark.attach("data.zip", zip);
 
 });
-define('skylark-data-zip/main',[
+define('skylark-jszip/main',[
     "skylark-langx/skylark",
     "./zip"
 ], function(skylark) {
     return skylark;
 });
 
-define('skylark-data-zip', ['skylark-data-zip/main'], function (main) { return main; });
+define('skylark-jszip', ['skylark-jszip/main'], function (main) { return main; });
 
 
 },this);
