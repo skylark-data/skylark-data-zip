@@ -15948,7 +15948,7 @@ https://github.com/nodeca/pako/blob/master/LICENSE
 
     return expose(10);
 });
-define('skylark-jszip/zip',[
+define('skylark-jszip/main',[
     "skylark-langx/skylark",
     "skylark-langx/langx",
     "./_stuk/jszip"
@@ -15967,16 +15967,9 @@ define('skylark-jszip/zip',[
         "ZipFile": JSZip
     });
 
-    return skylark.attach("data.zip", zip);
+    return skylark.attach("intg.jszip", zip);
 
 });
-define('skylark-jszip/main',[
-    "skylark-langx/skylark",
-    "./zip"
-], function(skylark) {
-    return skylark;
-});
-
 define('skylark-jszip', ['skylark-jszip/main'], function (main) { return main; });
 
 

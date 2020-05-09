@@ -11,8 +11,8 @@
     Any version of jQuery will do (it's just to write some examples), this one
     happens to be available in our tests.
     -->
-    <script type="text/javascript" src="http://registry.skylarkjs.org/packages/skylark-utils/v0.9.3-beta/uncompressed/skylark-utils-all.js"></script>
-    <script type="text/javascript" src="http://registry.skylarkjs.org/packages/skylark-jquery/v0.9.3/uncompressed/skylark-jquery.js"></script>
+    <script type="text/javascript" src="./skylark-jquery-all.js"></script>
+    <script type="text/javascript" src="./skylark-storages-cache.js"></script>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="./css/pygments.css">
     <link rel="stylesheet" href="./css/main.css">
 
-    <script type="text/javascript" src="../dist/uncompressed/skylark-data-zip.js"></script>
+    <script type="text/javascript" src="../dist/uncompressed/skylark-jszip.js"></script>
 
 <!--
     <script type="text/javascript" src="//stuk.github.io/jszip-utils/dist/jszip-utils.js"></script>
@@ -46,7 +46,7 @@
       <div class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
           <div class="navbar-header">
-            <a class="navbar-brand" href="javascript:void(0)"><strong>skylark-data-zip</strong></a>
+            <a class="navbar-brand" href="javascript:void(0)"><strong>skylark-jszip</strong></a>
           </div>
           <ul class="nav navbar-nav">
             <li >
@@ -109,7 +109,7 @@
           var $result = $("#result");
 
           var lfs;
-          skylarkjs.storages.localfs.request(1024*1024*10,true).then(function(fs){
+          skylarkjs.storages.cache.LocalFileSystem.request(1024*1024*10,true).then(function(fs){
               lfs = fs;
           });
 
@@ -130,7 +130,7 @@
                   $result.append($fileContent);
 
                   var dateBefore = new Date();
-                  skylarkjs.zip(f) .then(function(zip) {
+                  skylarkjs.intg.jszip(f) .then(function(zip) {
                       var dateAfter = new Date();
                       $title.append($("<span>", {
                           "class": "small",
