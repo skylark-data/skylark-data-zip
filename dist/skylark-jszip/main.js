@@ -5,5 +5,5 @@
  * @link www.skylarkjs.org
  * @license MIT
  */
-define(["skylark-langx/skylark","skylark-langx/langx","./_stuk/jszip"],function(n,a,i){var l=function(n,a){var l=new i;return arguments.length>0?l.loadAsync(n,a):l};return a.mixin(l,{ZipFile:i}),n.attach("intg.jszip",l)});
+define(["skylark-langx-ns","./_stuk/jszip"],function(n,t){var i=function(n,i){var a=new t;return arguments.length>0?a.loadAsync(n,i):a};return i.ZipFile=t,n.attach("intg.jszip",i)});
 //# sourceMappingURL=sourcemaps/main.js.map

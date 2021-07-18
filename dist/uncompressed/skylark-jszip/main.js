@@ -1,8 +1,7 @@
 define([
-    "skylark-langx/skylark",
-    "skylark-langx/langx",
+    "skylark-langx-ns",
     "./_stuk/jszip"
-], function(skylark, langx,JSZip) {
+], function(skylark, JSZip) {
 
     var zip = function(data, options) {
         var zip =  new JSZip();
@@ -13,9 +12,7 @@ define([
         }
     };
 
-    langx.mixin(zip, {
-        "ZipFile": JSZip
-    });
+    zip.ZipFile = JSZip
 
     return skylark.attach("intg.jszip", zip);
 

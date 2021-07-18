@@ -818,7 +818,8 @@ define('skylark-langx-objects/extend',[
     "./objects",
     "./mixin"
 ],function(objects,mixin) {
-    var slice = Array.prototype.slice;
+     var slice = Array.prototype.slice;
+   
 
     function extend(target) {
         var deep, args = slice.call(arguments, 1);

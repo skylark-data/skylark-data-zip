@@ -4,7 +4,7 @@
   "description": "A skylark wrapper for jszip.",
   "main": "-",
   "scripts": {
-    "build": "sbundle build .",
+    "build": "slib build .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "homepage": "www.skylarkjs.org",
@@ -23,8 +23,8 @@
   "author": "Hudaokeji Co.,Ltd",
   "license": "MIT",
   "bugs": "https://github.com/skylark-integration/skylark-jszip/issues",
-  "devDependencies": {
-    "skylark-langx": "https://github.com/skylark-langx/skylark-langx#master"
+  "dependencies": {
+    "skylark-langx-ns": "https://github.com/skylark-langx/skylark-langx-ns"
   },
   "engines": {
     "node": ">=0.8.0"

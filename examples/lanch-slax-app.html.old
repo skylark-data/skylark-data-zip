@@ -11,6 +11,8 @@
     Any version of jQuery will do (it's just to write some examples), this one
     happens to be available in our tests.
     -->
+    <script type="text/javascript" src="./skylark-jquery-all.js"></script>
+    <script type="text/javascript" src="./skylark-storages-cache.js"></script>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
@@ -18,9 +20,13 @@
     <!-- Optional theme -->
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
 
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
     <link rel="stylesheet" href="./css/pygments.css">
     <link rel="stylesheet" href="./css/main.css">
+
+    <script type="text/javascript" src="../dist/uncompressed/skylark-jszip.js"></script>
 
 <!--
     <script type="text/javascript" src="//stuk.github.io/jszip-utils/dist/jszip-utils.js"></script>
@@ -93,17 +99,6 @@
           <div id="error_block" class="alert alert-danger hidden">
             You will need a recent browser to use this demo :(
           </div>
-
-
-          <script type="text/javascript" src="./skylark-jquery-all.js"></script>
-          <script type="text/javascript" src="./skylark-io-caches.js"></script>
-
-          <!-- Latest compiled and minified JavaScript -->
-          <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-
-          <script type="text/javascript" src="../dist/uncompressed/skylark-jszip.js"></script>
-
-
           <script type="text/javascript">
           (function () {
             if (!window.FileReader || !window.ArrayBuffer) {
@@ -114,7 +109,7 @@
           var $result = $("#result");
 
           var lfs;
-          skylarkjs.io.caches.LocalFileSystem.request(1024*1024*10,true).then(function(fs){
+          skylarkjs.storages.cache.LocalFileSystem.request(1024*1024*10,true).then(function(fs){
               lfs = fs;
           });
 
