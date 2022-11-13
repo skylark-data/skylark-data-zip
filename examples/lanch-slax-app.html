@@ -97,6 +97,8 @@
 
           <script type="text/javascript" src="./skylark-jquery-all.js"></script>
           <script type="text/javascript" src="./skylark-io-caches.js"></script>
+          <script type="text/javascript" src="./skylark-langx-binary.js"></script>
+          <script type="text/javascript" src="./skylark-pako.js"></script>
 
           <!-- Latest compiled and minified JavaScript -->
           <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
@@ -164,6 +166,7 @@
                         console.log(e);
                       });
                   }, function (e) {
+                      console.log(e);
                       $result.append($("<div>", {
                           "class" : "alert alert-danger",
                       }).text("Error reading " + f.name + ": " + e.message));

@@ -1,0 +1,1 @@
+{"version":3,"sources":["external.js"],"names":["define","Promise"],"mappings":";;;;;;;AAAAA,OAAO,WACH,aAEA,OAAUC,QAAAA","file":"../external.js","sourcesContent":["define(function () {\n    'use strict';\n\n    return  { Promise};\n});"]}

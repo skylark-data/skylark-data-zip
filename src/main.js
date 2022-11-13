@@ -1,6 +1,6 @@
 define([
     "skylark-langx-ns",
-    "./_stuk/jszip"
+    "./JSZip"
 ], function(skylark, JSZip) {
 
     var zip = function(data, options) {

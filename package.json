@@ -24,7 +24,30 @@
   "license": "MIT",
   "bugs": "https://github.com/skylark-integration/skylark-jszip/issues",
   "dependencies": {
-    "skylark-langx-ns": "https://github.com/skylark-langx/skylark-langx-ns"
+    "skylark-langx-ns": "https://github.com/skylark-langx/skylark-langx-ns",
+    "skylark-langx-binary": "https://github.com/skylark-langx/skylark-langx-binary",
+    "skylark-langx-ns": "https://github.com/skylark-integration/skylark-paco"
+  },
+  "skylarkjs": {
+    "directories": {
+      "dependencies": "./node_modules"
+    },
+    "secondaries": {},
+    "build": {
+      "prepare": {
+        "texttojs": [
+          "html",
+          "json",
+          "css"
+        ],
+        "jsxtojs": false,
+        "es6toamd": false,
+        "cjstoamd": false
+      },
+      "bundles": {
+        "all": true
+      }
+    }
   },
   "engines": {
     "node": ">=0.8.0"

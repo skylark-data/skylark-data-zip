@@ -1,0 +1,9 @@
+/**
+ * skylark-jszip - A skylark wrapper for jszip.
+ * @author Hudaokeji Co.,Ltd
+ * @version v0.9.0
+ * @link www.skylarkjs.org
+ * @license MIT
+ */
+define(["./stream/StreamHelper","./stream/DataWorker","./utf8","./compressedObject","./stream/GenericWorker"],function(e,r,t,s,i){"use strict";var n=function(e,r,t){this.name=e,this.dir=t.dir,this.date=t.date,this.comment=t.comment,this.unixPermissions=t.unixPermissions,this.dosPermissions=t.dosPermissions,this._data=r,this._dataBinary=t.binary,this.options={compression:t.compression,compressionOptions:t.compressionOptions}};n.prototype={internalStream:function(r){var s=null,n="string";try{if(!r)throw new Error("No output type specified.");var o="string"===(n=r.toLowerCase())||"text"===n;"binarystring"!==n&&"text"!==n||(n="string"),s=this._decompressWorker();var a=!this._dataBinary;a&&!o&&(s=s.pipe(new t.Utf8EncodeWorker)),!a&&o&&(s=s.pipe(new t.Utf8DecodeWorker))}catch(e){(s=new i("error")).error(e)}return new e(s,n,"")},async:function(e,r){return this.internalStream(e).accumulate(r)},nodeStream:function(e,r){return this.internalStream(e||"nodebuffer").toNodejsStream(r)},_compressWorker:function(e,r){if(this._data instanceof s&&this._data.compression.magic===e.magic)return this._data.getCompressedWorker();var i=this._decompressWorker();return this._dataBinary||(i=i.pipe(new t.Utf8EncodeWorker)),s.createWorkerFrom(i,e,r)},_decompressWorker:function(){return this._data instanceof s?this._data.getContentWorker():this._data instanceof i?this._data:new r(this._data)}};for(var o=["asText","asBinary","asNodeBuffer","asUint8Array","asArrayBuffer"],a=function(){throw new Error("This method has been removed in JSZip 3.0, please check the upgrade guide.")},c=0;c<o.length;c++)n.prototype[o[c]]=a;return n});
+//# sourceMappingURL=sourcemaps/zipObject.js.map
