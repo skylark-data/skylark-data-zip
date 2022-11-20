@@ -1,21 +1,16 @@
 define([
     'skylark-langx-binary/buffer',
+    'skylark-langx-binary/transform',
+    'skylark-langx-binary/arraylike-to-string',
+    "skylark-langx-constructs",
     './support',
     './base64',
     './external',
-], function (Buffer,support, base64, external) {
+], function (Buffer,transform,arrayLikeToString,constructs,support, base64, external) {
     'use strict';
     var utils = {};
 
-    function string2binary(str) {
-        var result = null;
-        if (support.uint8array) {
-            result = new Uint8Array(str.length);
-        } else {
-            result = new Array(str.length);
-        }
-        return stringToArrayLike(str, result);
-    }
+
     utils.newBlob = function (part, type) {
         utils.checkSupport('blob');
         try {
@@ -31,156 +26,11 @@ define([
             }
         }
     };
-    function identity(input) {
-        return input;
-    }
-    function stringToArrayLike(str, array) {
-        for (var i = 0; i < str.length; ++i) {
-            array[i] = str.charCodeAt(i) & 255;
-        }
-        return array;
-    }
-    var arrayToStringHelper = {
-        stringifyByChunk: function (array, type, chunk) {
-            var result = [], k = 0, len = array.length;
-            if (len <= chunk) {
-                return String.fromCharCode.apply(null, array);
-            }
-            while (k < len) {
-                if (type === 'array' || type === 'nodebuffer') {
-                    result.push(String.fromCharCode.apply(null, array.slice(k, Math.min(k + chunk, len))));
-                } else {
-                    result.push(String.fromCharCode.apply(null, array.subarray(k, Math.min(k + chunk, len))));
-                }
-                k += chunk;
-            }
-            return result.join('');
-        },
-        stringifyByChar: function (array) {
-            var resultStr = '';
-            for (var i = 0; i < array.length; i++) {
-                resultStr += String.fromCharCode(array[i]);
-            }
-            return resultStr;
-        },
-        applyCanBeUsed: {
-            uint8array: function () {
-                try {
-                    return support.uint8array && String.fromCharCode.apply(null, new Uint8Array(1)).length === 1;
-                } catch (e) {
-                    return false;
-                }
-            }(),
-            nodebuffer: function () {
-                try {
-                ///    return support.nodebuffer && String.fromCharCode.apply(null, nodejsUtils.allocBuffer(1)).length === 1;
-                    return support.nodebuffer && String.fromCharCode.apply(null, Buffer.alloc(1)).length === 1;
-                } catch (e) {
-                    return false;
-                }
-            }()
-        }
-    };
-    function arrayLikeToString(array) {
-        var chunk = 65536, type = utils.getTypeOf(array), canUseApply = true;
-        if (type === 'uint8array') {
-            canUseApply = arrayToStringHelper.applyCanBeUsed.uint8array;
-        } else if (type === 'nodebuffer') {
-            canUseApply = arrayToStringHelper.applyCanBeUsed.nodebuffer;
-        }
-        if (canUseApply) {
-            while (chunk > 1) {
-                try {
-                    return arrayToStringHelper.stringifyByChunk(array, type, chunk);
-                } catch (e) {
-                    chunk = Math.floor(chunk / 2);
-                }
-            }
-        }
-        return arrayToStringHelper.stringifyByChar(array);
-    }
+
     utils.applyFromCharCode = arrayLikeToString;
-    function arrayLikeToArrayLike(arrayFrom, arrayTo) {
-        for (var i = 0; i < arrayFrom.length; i++) {
-            arrayTo[i] = arrayFrom[i];
-        }
-        return arrayTo;
-    }
-    var transform = {};
-    transform['string'] = {
-        'string': identity,
-        'array': function (input) {
-            return stringToArrayLike(input, new Array(input.length));
-        },
-        'arraybuffer': function (input) {
-            return transform['string']['uint8array'](input).buffer;
-        },
-        'uint8array': function (input) {
-            return stringToArrayLike(input, new Uint8Array(input.length));
-        },
-        'nodebuffer': function (input) {
-            ///return stringToArrayLike(input, nodejsUtils.allocBuffer(input.length));
-            return stringToArrayLike(input, Buffer.alloc(input.length));
-        }
-    };
-    transform['array'] = {
-        'string': arrayLikeToString,
-        'array': identity,
-        'arraybuffer': function (input) {
-            return new Uint8Array(input).buffer;
-        },
-        'uint8array': function (input) {
-            return new Uint8Array(input);
-        },
-        'nodebuffer': function (input) {
-            ///return nodejsUtils.newBufferFrom(input);
-            return Buffer.from(input);
-        }
-    };
-    transform['arraybuffer'] = {
-        'string': function (input) {
-            return arrayLikeToString(new Uint8Array(input));
-        },
-        'array': function (input) {
-            return arrayLikeToArrayLike(new Uint8Array(input), new Array(input.byteLength));
-        },
-        'arraybuffer': identity,
-        'uint8array': function (input) {
-            return new Uint8Array(input);
-        },
-        'nodebuffer': function (input) {
-            ///return nodejsUtils.newBufferFrom(new Uint8Array(input));
-            return Buffer.from(new Uint8Array(input));
-        }
-    };
-    transform['uint8array'] = {
-        'string': arrayLikeToString,
-        'array': function (input) {
-            return arrayLikeToArrayLike(input, new Array(input.length));
-        },
-        'arraybuffer': function (input) {
-            return input.buffer;
-        },
-        'uint8array': identity,
-        'nodebuffer': function (input) {
-            ///return nodejsUtils.newBufferFrom(input);
-            return Buffer.from(input);
-        }
-    };
-    transform['nodebuffer'] = {
-        'string': arrayLikeToString,
-        'array': function (input) {
-            return arrayLikeToArrayLike(input, new Array(input.length));
-        },
-        'arraybuffer': function (input) {
-            return transform['nodebuffer']['uint8array'](input).buffer;
-        },
-        'uint8array': function (input) {
-            return arrayLikeToArrayLike(input, new Uint8Array(input.length));
-        },
-        'nodebuffer': identity
-    };
+
     utils.transformTo = function (outputType, input) {
+        /*
         if (!input) {
             input = '';
         }
@@ -191,6 +41,11 @@ define([
         var inputType = utils.getTypeOf(input);
         var result = transform[inputType][outputType](input);
         return result;
+        */
+        if (outputType=="nodebuffer") {
+            outputType = "memory";
+        }
+        return transform(outputType,input);
     };
     utils.resolve = function (path) {
         var parts = path.split('/');

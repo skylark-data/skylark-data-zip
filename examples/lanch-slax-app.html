@@ -33,6 +33,7 @@
     <script type="text/javascript" src="//stuk.github.io/jszip-utils/dist/jszip-utils-ie.js"></script>
     <![endif]-->
 
+        <script type="text/javascript" src="./require.js" data-main="./main.js"></script>
 
   </head>
   <body>
@@ -95,92 +96,79 @@
           </div>
 
 
-          <script type="text/javascript" src="./skylark-jquery-all.js"></script>
-          <script type="text/javascript" src="./skylark-io-caches.js"></script>
-          <script type="text/javascript" src="./skylark-langx-binary.js"></script>
-          <script type="text/javascript" src="./skylark-pako.js"></script>
-
-          <!-- Latest compiled and minified JavaScript -->
-          <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-
-          <script type="text/javascript" src="../dist/uncompressed/skylark-jszip.js"></script>
-
-
           <script type="text/javascript">
-          (function () {
-            if (!window.FileReader || !window.ArrayBuffer) {
-              $("#error_block").removeClass("hidden").addClass("show");
-              return;
-            }
 
-          var $result = $("#result");
+              function initPage (langx,caches,$,jszip) {
+                if (!window.FileReader || !window.ArrayBuffer) {
+                  $("#error_block").removeClass("hidden").addClass("show");
+                  return;
+                }
 
-          var lfs;
-          skylarkjs.io.caches.LocalFileSystem.request(1024*1024*10,true).then(function(fs){
-              lfs = fs;
-          });
+                var $result = $("#result");
 
-          $("#file").on("change", function(evt) {
-              // remove content
-              $result.html("");
-              // be sure to show the results
-              $("#result_block").removeClass("hidden").addClass("show");
+                var lfs;
+                caches.LocalFileSystem.request(1024*1024*10,true).then(function(fs){
+                    lfs = fs;
+                });
+
+                $("#file").on("change", function(evt) {
+                    // remove content
+                    $result.html("");
+                    // be sure to show the results
+                    $("#result_block").removeClass("hidden").addClass("show");
 
 
-              // Closure to capture the file information.
-              function handleFile(f) {
-                  var $title = $("<h4>", {
-                      innerHtml : f.name
-                  });
-                  var $fileContent = $("<ul>");
-                  $result.append($title);
-                  $result.append($fileContent);
+                    // Closure to capture the file information.
+                    function handleFile(f) {
+                        var $title = $("<h4>", {
+                            innerHtml : f.name
+                        });
+                        var $fileContent = $("<ul>");
+                        $result.append($title);
+                        $result.append($fileContent);
 
-                  var dateBefore = new Date();
-                  skylarkjs.intg.jszip(f) .then(function(zip) {
-                      var dateAfter = new Date();
-                      $title.append($("<span>", {
-                          "class": "small",
-                      }).text(" (loaded in " + (dateAfter - dateBefore) + "ms)"));
+                        var dateBefore = new Date();
+                        jszip(f) .then(function(zip) {
+                            var dateAfter = new Date();
+                            $title.append($("<span>", {
+                                "class": "small",
+                            }).text(" (loaded in " + (dateAfter - dateBefore) + "ms)"));
 
-                      var defers = [];
-                      zip.forEach(function (relativePath, zipEntry) {  // 2) print entries
-                          $fileContent.append($("<li>").text(zipEntry.name));
-                          var d = new skylarkjs.langx.Deferred();
-                          zipEntry.async("arraybuffer").then(function(data){
-                            if (!zipEntry.dir) {
-                              lfs.writefile(zipEntry.name,new Blob([data], {type: "application/octet-binary"}),function(r){
-                                d.resolve();
-                              }, function(e){
-                                d.reject(e);
-                              });
-                            } else {
-                              d.resolve();
-                            }
-                          });
-                          defers.push(d.promise);
-                      });
-                      skylarkjs.langx.Deferred.all(defers).then(function(){
-                        $("#app").prop("src",lfs._cwd.toURL()+"index.html");
-                      },function(e){
-                        console.log(e);
-                      });
-                  }, function (e) {
-                      console.log(e);
-                      $result.append($("<div>", {
-                          "class" : "alert alert-danger",
-                      }).text("Error reading " + f.name + ": " + e.message));
-                  });
-                  
+                            var defers = [];
+                            zip.forEach(function (relativePath, zipEntry) {  // 2) print entries
+                                $fileContent.append($("<li>").text(zipEntry.name));
+                                var d = new langx.Deferred();
+                                zipEntry.async("arraybuffer").then(function(data){
+                                  if (!zipEntry.dir) {
+                                    lfs.writefile(zipEntry.name,new Blob([data], {type: "application/octet-binary"}),function(r){
+                                      d.resolve();
+                                    }, function(e){
+                                      d.reject(e);
+                                    });
+                                  } else {
+                                    d.resolve();
+                                  }
+                                });
+                                defers.push(d.promise);
+                            });
+                            langx.Deferred.all(defers).then(function(){
+                              $("#app").prop("src",lfs._cwd.toURL()+"index.html");
+                            },function(e){
+                              console.log(e);
+                            });
+                        }, function (e) {
+                            console.log(e);
+                            $result.append($("<div>", {
+                                "class" : "alert alert-danger",
+                            }).text("Error reading " + f.name + ": " + e.message));
+                        });
+                        
+                    }
+
+                    var files = evt.target.files;
+                    handleFile(files[0]);
+                });
               }
-
-              var files = evt.target.files;
-              handleFile(files[0]);
-          });
-
-
-
-          })();
           </script>
         </div>
       </div>
